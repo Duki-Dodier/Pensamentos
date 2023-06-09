@@ -34,9 +34,56 @@
   cursor: pointer;
 }
 .btn-menu ul li:hover {
-    filter: blur(1px);
+  filter: blur(1px);
 }
 .logo-menu {
-  margin: 0.4rem 0 0 1rem
+  margin: 0.4rem 0 0 1rem;
 }
 /* ========== FIM HEADER =============== */
+
+.container {
+  background-color: black;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+.container h2 {
+  font-weight: bold;
+  margin: 1rem 0 1rem 0;
+}
+
+.container form input {
+  padding: 0.4rem;
+  width: 20rem;
+  border-radius: 5px;
+  color: black;
+  font-weight: bold;
+}
+.container form button {
+  padding: 0.4rem;
+  color: white;
+  border-radius: 5px;
+  border: 2px solid rgb(172, 162, 28);
+  background-color: transparent;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0.3rem;
+}
+.container form button:hover {
+  filter: blur(1px);
+}
+
+.pensamentos-container {
+  margin-top: 2.5rem;
+}
+.pensamentos-container div {
+  margin-bottom: 1rem;
+}
+.pensamentos-container p {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
