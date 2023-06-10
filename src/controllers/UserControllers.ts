@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { User } from "../models/User";
@@ -12,30 +13,39 @@ declare module "express-session" {
   }
 }
 
+export const loginPage = async (
+  request: Request<SessionData>,
+  response: Response
+) => {
+  response.render("login");
+};
+
 export const login = async (
   request: Request<SessionData>,
   response: Response
 ) => {
-  //   const { email } = request.body;
-  //   const senha = request.body.password;
+  const { email } = request.body;
+  const senha = request.body.password;
 
-  //   const salt = bcrypt.genSaltSync(8);
-  //   const password = bcrypt.hashSync(senha, salt);
-
-  const email = "dodier_duki@protonmail.com";
-  const password =
-    "$2a$08$xE8VhqfpF.XtC9tR86ZmgOqnWELTsw4J9QXn9nRhTI5fjKbVhaS36";
-
-  const usuario = await User.findOne({ where: { email, password } });
+  const usuario = await User.findOne({ where: { email } });
 
   if (usuario) {
-    request.session.authenticated = true;
-    request.session.user = usuario.name;
-    request.session.save(() => response.redirect("/priv"));
-    return response.status(200);
+    const passwordMatch = await bcrypt.compare(
+      senha,
+      usuario?.password as string
+    );
+
+    if (passwordMatch) {
+      request.session.authenticated = true;
+      request.session.user = usuario?.name;
+      request.session.save(() => response.redirect("/priv"));
+      return response.status(200);
+    } else {
+      return response.redirect("/login");
+    }
   }
 
-  return response.json({ mensagem: "email ou senha incorretos" });
+  return response.redirect("/login");
 };
 
 export const home = async (
@@ -44,4 +54,30 @@ export const home = async (
 ) => {
   const name = request.session.user;
   return response.render("home", { name });
+};
+
+export const PageRegister = async (
+  request: Request<SessionData>,
+  response: Response
+) => {
+  response.render("register");
+};
+
+export const register = async (
+  request: Request<SessionData>,
+  response: Response
+) => {
+  const name = request.body.name;
+  const email = request.body.email;
+  const password = request.body.password;
+
+  const salt = bcrypt.genSaltSync(8);
+  const passwordHash = bcrypt.hashSync(password, salt);
+
+  const usuario = await User.create({ name, email, password: passwordHash });
+
+  request.session.authenticated = true;
+  request.session.user = usuario.name;
+  request.session.save(() => response.redirect("/priv"));
+  return response.status(200);
 };

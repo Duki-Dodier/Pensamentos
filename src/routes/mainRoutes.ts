@@ -5,7 +5,10 @@ import {Auth} from "../middlewares/Auth";
 
 const router = Router();
 
-router.get("/", UserControllers.login);
+router.get("/login", UserControllers.loginPage);
+router.post("/login", UserControllers.login);
+router.get("/register", UserControllers.PageRegister);
+router.post("/register", UserControllers.register);
 router.get("/priv", Auth, UserControllers.home);
 
 export default router;
