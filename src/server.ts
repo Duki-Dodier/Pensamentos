@@ -25,21 +25,22 @@ server.use(
   session({
     name: "session",
     secret: "senhasecreta",
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     store: new FileStoreInstance({
       logFn: function () {},
       path: path.join(__dirname, "sessions"),
     }),
     cookie: {
       secure: false,
-      maxAge: 3600,
-      expires: new Date(Date.now() + 36000),
+      maxAge: 3600000,
+      expires: new Date(Date.now() + 3600000),
       httpOnly:true
     },
   })
 );
 
+console.log( path.join(__dirname, "sessions"))
 // Configuração do middleware para servir arquivos estáticos da pasta 'public'
 server.use(express.static("public"));
 

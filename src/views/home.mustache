@@ -1,26 +1,32 @@
 {{>partials/header}}
-{{>partials/navbar}}
+
+   <!-- MENU -->
+    <div class="container-menu">
+      <div class="logo-menu">
+        <img src="media/toughts_logo.png" alt="logo-menu" />
+      </div>
+      <div class="btn-menu">
+        <ul>
+          <li><a href="/logout" >Logouth</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- MENU -->
+
 <div class="container">
   <h2>Conheça alguns dos nossos Pensamentos</h2>
 
-  <form action="">
-    <input type="text" placeholder="está buscando por algo?" />
-    <button>Buscar</button>
+  <form action="/pensamento" method="POST">
+    <input type="text" name="pensamento" placeholder="criar pensamento" />
+    <button>Criar</button>
   </form>
-
+  
   <div class="pensamentos-container">
     <div>
-      <p>"pensamento1"</p>
-      <blockquote>author:{{name}}</blockquote>
-    </div>
-    <div>
-      <p>pensamento2</p>
-      <blockquote>author:</blockquote>
-    </div>
-    <div>
-      <p>pensamento3</p>
-      <blockquote>author:</blockquote>
-    </div>
+      {{#pensamento2}}
+        <p>{{title}}</p>
+         <blockquote>author:{{User.name}}</blockquote>
+      {{/pensamento2}}
   </div>
 </div>
 

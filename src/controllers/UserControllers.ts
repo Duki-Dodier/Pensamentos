@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { User } from "../models/User";
+import { Pensamentos } from "../models/Pensamentos";
 import JWT from "jsonwebtoken";
 import { SessionData } from "express-session";
 
@@ -9,7 +10,7 @@ import { SessionData } from "express-session";
 declare module "express-session" {
   interface SessionData {
     authenticated?: boolean;
-    user?: string;
+    userid?: number;
   }
 }
 
@@ -37,7 +38,8 @@ export const login = async (
 
     if (passwordMatch) {
       request.session.authenticated = true;
-      request.session.user = usuario?.name;
+      request.session.userid = usuario?.id;
+      console.log("USERCONTROLLER.LOGIN" + request.session);
       request.session.save(() => response.redirect("/priv"));
       return response.status(200);
     } else {
@@ -52,8 +54,11 @@ export const home = async (
   request: Request<SessionData>,
   response: Response
 ) => {
-  const name = request.session.user;
-  return response.render("home", { name });
+  const data = await Pensamentos.findAll({ include: User });
+
+  const pensamento2 = data.map((pensamento) => pensamento.get({ plain: true }));
+  console.log(pensamento2);
+  return response.render("home", { pensamento2 });
 };
 
 export const PageRegister = async (
@@ -77,7 +82,30 @@ export const register = async (
   const usuario = await User.create({ name, email, password: passwordHash });
 
   request.session.authenticated = true;
-  request.session.user = usuario.name;
+  request.session.userid = usuario?.id;
   request.session.save(() => response.redirect("/priv"));
   return response.status(200);
+};
+
+export const pensamento = async (
+  request: Request<SessionData>,
+  response: Response
+) => {
+  const pensamento = request.body.pensamento;
+  const usuario_id = request.session.userid;
+  console.log("USERCONTROLLER.PENSAMENTO " + pensamento, usuario_id);
+
+  const new_pensamento = await Pensamentos.create({
+    title: pensamento,
+    UserId: usuario_id,
+  });
+  return response.redirect("priv");
+};
+
+export const logout = async (
+  request: Request<SessionData>,
+  response: Response
+) => {
+  request.session.destroy((err) => {});
+  return response.redirect("/login");
 };

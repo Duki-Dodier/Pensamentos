@@ -17,7 +17,7 @@ export const Auth = (
   response: Response,
   next: NextFunction
 ) => {
-  console.log(request.session.authenticated)
+  console.log("AUTH"+request.session.authenticated)
   if (request.session.authenticated) {
     next();
   } else {

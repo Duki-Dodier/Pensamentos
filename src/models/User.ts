@@ -1,6 +1,7 @@
 import connection from "../db/conn";
 
 import { Model, DataTypes } from "sequelize";
+import { Pensamentos } from "./Pensamentos";
 
 export interface UserInstance extends Model {
   id: number;
@@ -31,3 +32,5 @@ export const User = connection.define<UserInstance>(
     tableName: "Users",
   }
 );
+User.hasMany(Pensamentos);
+Pensamentos.belongsTo(User);
