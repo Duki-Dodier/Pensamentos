@@ -91,3 +91,16 @@
   font-weight: bold;
   margin-bottom: 1rem;
 }
+.xis {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.xis:hover {
+  filter: blur(3px);
+}
+
+.titlexis {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

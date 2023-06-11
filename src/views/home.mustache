@@ -1,17 +1,17 @@
 {{>partials/header}}
 
-   <!-- MENU -->
-    <div class="container-menu">
-      <div class="logo-menu">
-        <img src="media/toughts_logo.png" alt="logo-menu" />
-      </div>
-      <div class="btn-menu">
-        <ul>
-          <li><a href="/logout" >Logouth</a></li>
-        </ul>
-      </div>
-    </div>
-    <!-- MENU -->
+<!-- MENU -->
+<div class="container-menu">
+  <div class="logo-menu">
+    <img src="media/toughts_logo.png" alt="logo-menu" />
+  </div>
+  <div class="btn-menu">
+    <ul>
+      <li><a href="/logout">Logouth</a></li>
+    </ul>
+  </div>
+</div>
+<!-- MENU -->
 
 <div class="container">
   <h2>Conheça alguns dos nossos Pensamentos</h2>
@@ -20,14 +20,17 @@
     <input type="text" name="pensamento" placeholder="criar pensamento" />
     <button>Criar</button>
   </form>
-  
-  <div class="pensamentos-container">
-    <div>
-      {{#pensamento2}}
-        <p>{{title}}</p>
-         <blockquote>author:{{User.name}}</blockquote>
-      {{/pensamento2}}
-  </div>
-</div>
 
-{{>partials/footer}}
+  <div class="pensamentos-container">
+    <div class="titlediv">
+      {{#pensamento2}}
+      <div class="titlepensamento">
+        <p class="titlexis">{{ title }} <span href="/delete" class="xis">❌</span></p>
+        <blockquote>author:{{ User.name }}</blockquote>
+      </div>
+      {{/pensamento2}}
+    </div>
+  </div>
+
+  {{>partials/footer}}
+</div>

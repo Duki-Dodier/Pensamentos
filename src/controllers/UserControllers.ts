@@ -109,3 +109,11 @@ export const logout = async (
   request.session.destroy((err) => {});
   return response.redirect("/login");
 };
+
+export const deletePensamento  = async (
+  request: Request<SessionData>,
+  response: Response
+) => {
+
+
+};
